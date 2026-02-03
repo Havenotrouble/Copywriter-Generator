@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: copywriter-generator
+
+  ai:
+    openai:
+      api-key: sk-f893a8a9bf9d4bb9ac48da874d50fca5
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+          max-tokens: 2000
+
+server:
+  port: 8080
+
+# Logging Configuration
+logging:
+  level:
+    com.copywriter.generator: DEBUG
+    org.springframework.ai: DEBUG
+
+# CORS Configuration
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:3001
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true
