@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, Copy, Check, Sparkles } from 'lucide-react';
 import * as Tabs from '@radix-ui/react-tabs';
-import * as Select from '@radix-ui/react-select';
 import { cn } from '../lib/utils';
 
 // Platform configuration
