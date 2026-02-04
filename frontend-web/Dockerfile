@@ -24,7 +24,6 @@ WORKDIR /app
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/public ./public
 
 # 创建非 root 用户
 RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
