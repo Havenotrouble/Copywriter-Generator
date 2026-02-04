@@ -3,22 +3,18 @@ version: '3.8'
 services:
   # 后端服务
   backend:
-    build:
-      context: ./backend-api
-      dockerfile: Dockerfile
+    # 替换为你的阿里云私有镜像地址
+    image: crpi-00uv6xhnz6e4vc1g.cn-hongkong.personal.cr.aliyuncs.com/liziyi798/copywriter-backend:latest
     container_name: copywriter-backend
     restart: unless-stopped
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
-      - ALLOWED_ORIGINS=http://localhost,http://your-domain.com
       - TZ=Asia/Bangkok
-    volumes:
-      - ./backend-api/logs:/app/logs
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -26,9 +22,8 @@ services:
 
   # 前端服务
   frontend:
-    build:
-      context: ./frontend-web
-      dockerfile: Dockerfile
+    # 替换为你的阿里云私有镜像地址
+    image: crpi-00uv6xhnz6e4vc1g.cn-hongkong.personal.cr.aliyuncs.com/liziyi798/copywriter-frontend:latest
     container_name: copywriter-frontend
     restart: unless-stopped
     environment:
@@ -37,7 +32,7 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -46,7 +41,7 @@ services:
       backend:
         condition: service_healthy
 
-  # Nginx 反向代理
+  # Nginx 反向代理 (使用官方镜像，因为它不需要你构建)
   nginx:
     image: nginx:1.25-alpine
     container_name: copywriter-nginx
