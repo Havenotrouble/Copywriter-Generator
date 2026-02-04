@@ -88,7 +88,7 @@ public class ListingGeneratorService {
 
     /**
      * Wrap a text chunk as JSON string
-     * Spring's TEXT_EVENT_STREAM_VALUE will automatically add "data: " prefix
+     * Spring's TEXT_EVENT_STREAM_VALUE will automatically add "data: " prefix and "\n\n" suffix
      *
      * @param platformId Platform identifier
      * @param text Text chunk content
@@ -100,6 +100,7 @@ public class ListingGeneratorService {
             data.put("id", platformId);
             data.put("text", text);
 
+            // 只返回 JSON，让 Spring 自动添加 SSE 格式
             return objectMapper.writeValueAsString(data);
         } catch (Exception e) {
             log.error("Error wrapping chunk as JSON: {}", e.getMessage());

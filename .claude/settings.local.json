@@ -12,7 +12,19 @@
       "Bash(where:*)",
       "Bash(\"C:\\\\Users\\\\23732\\\\.jdks\\\\ms-17.0.17\\\\bin\\\\java.exe\" -version)",
       "Bash(JAVA_HOME=\"C:\\\\Users\\\\23732\\\\.jdks\\\\ms-17.0.17\" ./mvnw clean:*)",
-      "Bash(JAVA_HOME=\"C:\\\\Users\\\\23732\\\\.jdks\\\\ms-17.0.17\" ./mvnw compile:*)"
+      "Bash(JAVA_HOME=\"C:\\\\Users\\\\23732\\\\.jdks\\\\ms-17.0.17\" ./mvnw compile:*)",
+      "Bash(./start-backend.bat)",
+      "Bash(npm run dev:*)",
+      "Bash(ping:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(taskkill /F /PID 23432)",
+      "Bash(powershell -Command \"Stop-Process -Id 22096 -Force\")",
+      "Bash(powershell -Command \"Stop-Process -Id 23432 -Force\")",
+      "Bash(powershell -Command \"Stop-Process -Id 1952 -Force\")",
+      "Bash(powershell -Command \"Stop-Process -Id 7344 -Force\")",
+      "Bash(powershell:*)"
     ]
   }
 }

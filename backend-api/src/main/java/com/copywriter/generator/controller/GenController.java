@@ -23,12 +23,17 @@ public class GenController {
      * Generate platform-specific listings with AI streaming
      *
      * @param request ListingRequest containing content, platforms, and target language
-     * @return Server-Sent Events stream of JSON-formatted chunks
+     * @return Server-Sent Events stream of formatted chunks
      */
     @PostMapping(value = "/generate", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> generateListings(@RequestBody ListingRequest request) {
+    public Flux<String> generateListings(@RequestBody ListingRequest request,
+                                         org.springframework.http.server.reactive.ServerHttpResponse response) {
         log.info("Received generation request for platforms: {} in language: {}",
                 request.getPlatforms(), request.getLanguage());
+
+        // 设置响应头，禁用缓冲
+        response.getHeaders().set("Cache-Control", "no-cache");
+        response.getHeaders().set("X-Accel-Buffering", "no");
 
         // Validate request
         if (request.getContent() == null || request.getContent().isBlank()) {
@@ -43,14 +48,14 @@ public class GenController {
             return Flux.just("data: {\"id\":\"error\",\"text\":\"Language must be specified\"}\n\n");
         }
 
-        // Generate listings
+        // Generate listings - Service 层已经格式化为 SSE 格式
         return listingGeneratorService.generateListings(
                 request.getContent(),
                 request.getPlatforms(),
                 request.getLanguage()
         ).doOnNext(chunk -> {
             // 添加日志监控发送的数据
-            log.debug("Sending chunk to client: {}", chunk.substring(0, Math.min(100, chunk.length())));
+            log.debug("Sending SSE chunk: {}", chunk.substring(0, Math.min(100, chunk.length())));
         });
     }
 

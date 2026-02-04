@@ -39,8 +39,8 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    // Check server connection
-    fetch('/api/health')
+    // Check server connection - 直接连接后端服务器
+    fetch('http://localhost:8080/api/health')
       .then(() => setServerConnected(true))
       .catch(() => setServerConnected(false));
   }, []);
@@ -67,7 +67,8 @@ export default function Home() {
     setActiveTab(selectedPlatforms[0]);
 
     try {
-      const response = await fetch('/api/generate', {
+      // 直接连接后端服务器，绕过 Next.js 代理以避免缓冲
+      const response = await fetch('http://localhost:8080/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,6 +130,9 @@ export default function Home() {
                 try {
                   // 解析 JSON 数据
                   const data = JSON.parse(jsonStr);
+
+                  // 添加时间戳日志，验证是否逐步接收
+                  console.log(`[${new Date().toISOString()}] 收到 ${data.id}: "${data.text}"`);
 
                   // 实时更新状态：追加文本到对应平台
                   setResults((prev) => {
