@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: copywriter-generator
+
+  ai:
+    openai:
+      api-key: ${DEEPSEEK_API_KEY}
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+          max-tokens: 2000
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  shutdown: graceful
+
+# Logging Configuration (生产环境使用 INFO 级别)
+logging:
+  level:
+    root: INFO
+    com.copywriter.generator: INFO
+    org.springframework.ai: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: /app/logs/application.log
+    max-size: 10MB
+    max-history: 7
+
+# CORS Configuration (生产环境配置)
+cors:
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost}
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true
+
+# Spring Boot Actuator (健康检查)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized

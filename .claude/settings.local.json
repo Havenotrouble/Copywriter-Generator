@@ -24,7 +24,12 @@
       "Bash(powershell -Command \"Stop-Process -Id 23432 -Force\")",
       "Bash(powershell -Command \"Stop-Process -Id 1952 -Force\")",
       "Bash(powershell -Command \"Stop-Process -Id 7344 -Force\")",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(chmod:*)",
+      "Bash(test:*)",
+      "Bash(bash:*)",
+      "Bash(docker:*)",
+      "Bash(git add:*)"
     ]
   }
 }

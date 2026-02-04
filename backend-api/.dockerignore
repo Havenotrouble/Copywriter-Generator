@@ -1,0 +1,11 @@
+target/
+.mvn/wrapper/maven-wrapper.jar
+*.log
+.env
+.env.local
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+*.bat

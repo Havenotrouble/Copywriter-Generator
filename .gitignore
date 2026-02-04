@@ -13,10 +13,14 @@ target/
 
 # Logs
 *.log
+backend-api/logs/
 
 # Environment
 .env
 .env.local
+
+# Docker
+docker-compose.override.yml
 
 # Node.js
 node_modules/

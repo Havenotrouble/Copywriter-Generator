@@ -1,0 +1,52 @@
+# 生产环境部署配置示例
+# 复制此文件到项目根目录并重命名为 docker-compose.override.yml
+# 这个文件会自动覆盖 docker-compose.yml 中的配置
+
+version: '3.8'
+
+services:
+  # 生产环境后端配置
+  backend:
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - ALLOWED_ORIGINS=https://your-domain.com,https://www.your-domain.com
+      - TZ=Asia/Bangkok
+      # 可选：添加更多环境变量
+      # - JAVA_OPTS=-Xms512m -Xmx1024m
+    # 生产环境可以限制资源
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # 生产环境前端配置
+  frontend:
+    environment:
+      - NODE_ENV=production
+      - TZ=Asia/Bangkok
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # 生产环境 Nginx 配置
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"  # HTTPS 端口
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      # SSL 证书（如果使用 HTTPS）
+      # - ./ssl/cert.pem:/etc/nginx/ssl/cert.pem:ro
+      # - ./ssl/key.pem:/etc/nginx/ssl/key.pem:ro
+      - nginx-cache:/var/cache/nginx
+      - nginx-logs:/var/log/nginx
